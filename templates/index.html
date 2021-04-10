@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      *,
+      *::after,
+      *::before {
+        margin: 0;
+        padding: 0;
+        box-sizing: inherit;
+      }
+      html {
+        font-size: 62.5%;
+      }
+      body {
+        box-sizing: border-box;
+        text-align: center;
+        font-family: sans-serif;
+        font-weight: 500;
+        color: black;
+        font-size: 1.6rem;
+        background-color: whitesmoke;
+      }
+      header {
+        color: white;
+        background-color: rgb(105, 90, 172);
+      }
+      header h1 {
+        font-weight: 500;
+        font-size: 2.5rem;
+        padding: 3rem;
+      }
+      section {
+        max-width: 30%;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 5px;
+        border: solid 1px rgb(105, 90, 172);
+        padding: 2rem;
+        margin: 10rem auto;
+      }
+      form {
+        margin-top: 2rem;
+        display: flex;
+        flex-direction: column;
+      }
+
+      div {
+        align-items: center;
+        display: flex;
+        justify-content: space-around;
+      }
+      button[type="submit"] {
+        display: inline-block;
+        width: 100%;
+        background-color: rgb(105, 90, 172);
+        color: white;
+        padding: 1rem;
+        margin: 2rem 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: rgb(93, 80, 153);
+      }
+      button:active {
+        background-color: rgb(105, 90, 172);
+      }
+
+      input[type="text"] {
+        display: inline-block;
+        min-width: 80%;
+        padding: 1rem;
+        margin: 8px 0;
+        /* display: inline-block; */
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      hr {
+        margin-bottom: 3rem;
+        margin-top: 1.5rem;
+        border-top: 1px solid rgb(105, 90, 172);
+      }
+
+      @media screen and (max-width: 650px) {
+        section {
+          max-width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>歡迎光臨，請註冊登入系統</h1>
+    </header>
+    <section>
+      <h3>註冊帳號</h3>
+      <form action="/signup" method="POST">
+        <div>
+          <label for="name">姓名</label>
+          <input type="text" name="name" id="name" placeholder="Your name.." />
+        </div>
+        <div>
+          <label for="username">帳號</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Your username.."
+          />
+        </div>
+        <div>
+          <label for="password">密碼</label>
+          <input
+            type="text"
+            name="password"
+            id="password"
+            placeholder="Your password.."
+          />
+        </div>
+        <button type="submit" value="Submit">註冊</button>
+      </form>
+      <hr />
+      <h3>登入系統</h3>
+      <form action="/signin" method="POST">
+        <div>
+          <label for="username">帳號</label>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Your username.."
+          />
+        </div>
+        <div>
+          <label for="password">密碼</label>
+          <input
+            type="text"
+            name="password"
+            id="password"
+            placeholder="Your password.."
+          />
+        </div>
+        <button type="submit" value="Submit">登入</button>
+      </form>
+    </section>
+  </body>
+</html>

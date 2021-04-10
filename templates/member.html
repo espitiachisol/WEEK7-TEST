@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      *,
+      *::after,
+      *::before {
+        margin: 0;
+        padding: 0;
+        box-sizing: inherit;
+      }
+      html {
+        font-size: 62.5%;
+      }
+      body {
+        box-sizing: border-box;
+        text-align: center;
+        font-family: sans-serif;
+        font-weight: 500;
+        color: black;
+        font-size: 1.6rem;
+        background-color: whitesmoke;
+      }
+      header {
+        color: white;
+        background-color: rgb(105, 90, 172);
+      }
+      header h1 {
+        font-weight: 500;
+        font-size: 2.5rem;
+        padding: 3rem;
+      }
+      section {
+        max-width: 30%;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 5px;
+        border: solid 1px rgb(105, 90, 172);
+        padding: 2rem;
+        margin: 10rem auto;
+      }
+
+      button[type="submit"] {
+        display: inline-block;
+        width: 100%;
+        background-color: rgb(105, 90, 172);
+        color: white;
+        padding: 1rem;
+        margin-top: 2rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background-color: rgb(93, 80, 153);
+      }
+      button:active {
+        background-color: rgb(105, 90, 172);
+      }
+      input[type="text"] {
+        display: inline-block;
+        min-width: 80%;
+        padding: 1rem;
+        margin: 8px 0;
+        /* display: inline-block; */
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+      hr {
+        margin-bottom: 3rem;
+        margin-top: 3rem;
+        border-top: 1px solid rgb(105, 90, 172);
+      }
+
+      @media screen and (max-width: 650px) {
+        section {
+          max-width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>歡迎光臨，這是會員頁</h1>
+    </header>
+    <section>
+      <h3>{{memberName}}，歡迎登入系統</h3>
+      <form action="/signout">
+        <button type="submit" value="Submit">登出系統</button>
+      </form>
+      <hr />
+      <h3>查詢會員姓名</h3>
+      <form >  
+          <input
+            type="text"
+            id="username"
+            placeholder="name.."
+          />
+        </div>
+        <p id ="test"></p>
+        <button type="submit" id="search" onclick="getname();">查詢</button>
+      </form>
+    </section>
+    <script>
+      // http://127.0.0.1:3000/api/users?username=123
+      let test=document.getElementById("test");
+      let search=document.getElementById("search");
+
+      let getname=function(){
+        let username=document.getElementById("username").value;
+        console.log(username);
+        let src ="/api/users?username="+username;
+
+      fetch(src,{
+        method:"GET",
+        // credentials:"include",
+        // cache:"no-cache",
+        // headers: new Headers({
+        //   "content-type":"application/json"
+        // })
+      })
+      .then(function(response){
+        console.log(response);
+        return response.json();
+      })
+      
+      .then(function(result){
+        console.log("final result "+ result.data);
+        test.innerHTML=result.data.name
+      
+      });
+      };
+    </script>
+  </body>
+</html>
