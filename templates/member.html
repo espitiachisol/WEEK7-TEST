@@ -108,40 +108,26 @@
         let username=document.getElementById("username").value;
         let src ="/api/users?username="+username;
         let newname;
-      fetch(src,{
-        method:"GET",
-      })
-      .then(function(response){
-        console.log(response);
-        return response.json();
-      })
-      
-      .then(function(result){
+        fetch(src,{method:"GET",})
+        .then(function(response){
+          console.log(response);
+          return response.json();
+        })
+        .then(function(result){
         
-        if (search_user_name.textContent){
-          console.log("this is search_user_name"+search_user_name.textContent);
-          search_user_name.textContent="";
-      }
-        
-        if (result.data){
-        newname= document.createTextNode(result.data.name);
-        search_user_name.appendChild(newname);
-        
-        
-        
-      }else{
-        newname= document.createTextNode("查詢不到資料");
-        search_user_name.appendChild(newname);
-      
-      }
-
-
-
-      });
+          if (search_user_name.textContent){
+            console.log("this is search_user_name"+search_user_name.textContent);
+            search_user_name.textContent="";
+          }
+          if (result.data){
+            newname= document.createTextNode(result.data.name);
+            search_user_name.appendChild(newname);
+          }else{
+            newname= document.createTextNode("查詢不到資料");
+            search_user_name.appendChild(newname);
+          }
+        });
       };
-    
-      
-
     </script>
   </body>
 </html>
