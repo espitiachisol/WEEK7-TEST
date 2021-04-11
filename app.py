@@ -1,4 +1,4 @@
-from flask import Flask,jsonify, session, redirect, render_template, request,url_for,make_response
+from flask import Flask,jsonify, session, redirect, render_template, request,url_for
 import mysql.connector
 
 app=Flask(__name__)
@@ -10,7 +10,7 @@ db = mysql.connector.connect(
     host= "localhost",
     user="root",
     password="su3cl3jo3m6") #mySQL當初設定的密碼
-#print(db)#<mysql.connector.connection.MySQLConnection object at 0x7ff783387af0>
+
 cursor = db.cursor() 
 #建立資料庫
 cursor.execute("CREATE DATABASE IF NOT EXISTS solchiwebsite")
@@ -37,8 +37,7 @@ def signin():
     #根據登入的帳號密碼搜尋資料庫，是否有對應的帳號密碼
     cursor.execute("SELECT username FROM users WHERE username = %s and password = %s",(username, password))
     currentUser = cursor.fetchone()
-    # cursor.execute("SELECT username FROM users WHERE password = %s",(password,))
-    # currentPassword = cursor.fetchone()
+
     #若有，把username儲存到session裡，轉至會員頁面
     if currentUser :
         session['username'] = username
@@ -51,21 +50,25 @@ def signin():
 #----------------------------------------------------搜尋
 @app.route("/api/users")
 def searchname():
-    searchName=request.args.get("username")
-    cursor.execute("SELECT id,name,username FROM users WHERE username = %s ",(searchName,))
-    currentUser = cursor.fetchone()
-    print(currentUser)
-    if currentUser:
-        data={"data":{
-        "id":currentUser[0], "name":currentUser[1], "username":currentUser[2] } }
-        res= jsonify(data)
-        return res
+    #如果使用者沒在登入狀態下不得連到此api
+    username = session.get('username') 
+    if(username):
+        searchName=request.args.get("username") #得到使用者輸入名字
+        cursor.execute("SELECT id,name,username FROM users WHERE username = %s ",(searchName,))
+        currentUser = cursor.fetchone()
+        if currentUser: 
+            data={"data":{
+            "id":currentUser[0], "name":currentUser[1], "username":currentUser[2] } }
+            res= jsonify(data)  #將搜尋到的使用者資料以json格式回傳
+            return res
+        else: #若沒有,回傳 null
+            null=None
+            data={"data":null}
+            res= jsonify(data)
+            return res 
     else:
-        null=None
-        data={"data":null}
-        res= jsonify(data)
-        return res
-   
+        return redirect(url_for('error', message="您沒有此權限，請登入"))
+
 #----------------------------------------------------會員
 @app.route("/member")
 def member():

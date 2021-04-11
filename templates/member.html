@@ -43,7 +43,7 @@
         margin: 10rem auto;
       }
 
-      button[type="submit"] {
+      button[class="submit"] {
         display: inline-block;
         width: 100%;
         background-color: rgb(105, 90, 172);
@@ -89,38 +89,27 @@
     <section>
       <h3>{{memberName}}，歡迎登入系統</h3>
       <form action="/signout">
-        <button type="submit" value="Submit">登出系統</button>
+        <button class="submit" value="Submit">登出系統</button>
       </form>
       <hr />
       <h3>查詢會員姓名</h3>
-      <form >  
           <input
             type="text"
             id="username"
             placeholder="name.."
           />
         </div>
-        <p id ="test"></p>
-        <button type="submit" id="search" onclick="getname();">查詢</button>
-      </form>
+        <p id ="search_user_name"></p>
+        <button class="submit" id="search" onclick="getname();">查詢</button>
     </section>
     <script>
-      // http://127.0.0.1:3000/api/users?username=123
-      let test=document.getElementById("test");
-      let search=document.getElementById("search");
-
+      let search_user_name=document.getElementById("search_user_name");
       let getname=function(){
         let username=document.getElementById("username").value;
-        console.log(username);
         let src ="/api/users?username="+username;
-
+        let newname;
       fetch(src,{
         method:"GET",
-        // credentials:"include",
-        // cache:"no-cache",
-        // headers: new Headers({
-        //   "content-type":"application/json"
-        // })
       })
       .then(function(response){
         console.log(response);
@@ -128,11 +117,31 @@
       })
       
       .then(function(result){
-        console.log("final result "+ result.data);
-        test.innerHTML=result.data.name
+        
+        if (search_user_name.textContent){
+          console.log("this is search_user_name"+search_user_name.textContent);
+          search_user_name.textContent="";
+      }
+        
+        if (result.data){
+        newname= document.createTextNode(result.data.name);
+        search_user_name.appendChild(newname);
+        
+        
+        
+      }else{
+        newname= document.createTextNode("查詢不到資料");
+        search_user_name.appendChild(newname);
       
+      }
+
+
+
       });
       };
+    
+      
+
     </script>
   </body>
 </html>
